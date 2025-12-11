@@ -7,6 +7,7 @@ import com.clientes.crud.repository.ClientRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -32,11 +33,24 @@ public class ClientService {
         return clientes.map(x -> new ClientResponseDTO(x));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public ClientResponseDTO findById (Long id){
         Client client = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("(CUSTOMIZAR O ERRO AINDA)"));
         return new ClientResponseDTO(client);
+    }
+
+    @Transactional
+    public ClientResponseDTO update (Long id, ClientRequestDTO dto){
+        Client client = repository.getReferenceById(id);
+        copyDtoToEntity(dto, client);
+        client = repository.save(client);
+        return new ClientResponseDTO(client);
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void delete (Long id){
+        repository.deleteById(id);
     }
 
     private void copyDtoToEntity(ClientRequestDTO dto, Client cliente) {
