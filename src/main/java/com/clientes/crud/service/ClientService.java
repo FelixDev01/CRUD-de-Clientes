@@ -32,6 +32,13 @@ public class ClientService {
         return clientes.map(x -> new ClientResponseDTO(x));
     }
 
+    @Transactional
+    public ClientResponseDTO findById (Long id){
+        Client client = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("(CUSTOMIZAR O ERRO AINDA)"));
+        return new ClientResponseDTO(client);
+    }
+
     private void copyDtoToEntity(ClientRequestDTO dto, Client cliente) {
         cliente.setName(dto.getName());
         cliente.setCpf(dto.getCpf());
