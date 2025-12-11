@@ -4,6 +4,8 @@ import com.clientes.crud.Entity.Client;
 import com.clientes.crud.dto.ClientRequestDTO;
 import com.clientes.crud.dto.ClientResponseDTO;
 import com.clientes.crud.repository.ClientRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,12 @@ public class ClientService {
         copyDtoToEntity(dto, cliente);
         cliente = repository.save(cliente);
         return new ClientResponseDTO(cliente);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ClientResponseDTO> findAll(Pageable pageable){
+        Page<Client> clientes = repository.findAll(pageable);
+        return clientes.map(x -> new ClientResponseDTO(x));
     }
 
     private void copyDtoToEntity(ClientRequestDTO dto, Client cliente) {
