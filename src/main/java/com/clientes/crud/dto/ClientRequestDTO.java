@@ -1,13 +1,22 @@
 package com.clientes.crud.dto;
 
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 
 public class ClientRequestDTO {
 
+    @NotBlank(message = "O nome é obrigatório")
     private String name;
     private String cpf;
+    @PositiveOrZero(message = "A renda não deve ser negativa")
+    @NotNull
     private Double income;
+    @PastOrPresent(message = "A data não pode ser futura")
+    @NotNull
     private LocalDate birthDate;
+    @PositiveOrZero(message = "A quantidade de filhos não pode ser negativa")
+    @NotNull
     private Integer children;
 
     public ClientRequestDTO() {

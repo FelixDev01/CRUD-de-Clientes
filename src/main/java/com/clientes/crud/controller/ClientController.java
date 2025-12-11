@@ -3,6 +3,7 @@ package com.clientes.crud.controller;
 import com.clientes.crud.dto.ClientRequestDTO;
 import com.clientes.crud.dto.ClientResponseDTO;
 import com.clientes.crud.service.ClientService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientResponseDTO> clienteCriado(@RequestBody ClientRequestDTO dto){
+    public ResponseEntity<ClientResponseDTO> clienteCriado(@RequestBody @Valid ClientRequestDTO dto){
         ClientResponseDTO client = service.novoCliente(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(client.getId()).toUri();
@@ -42,7 +43,7 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClientResponseDTO> clienteEncontrado(@PathVariable Long id, @RequestBody ClientRequestDTO dto){
+    public ResponseEntity<ClientResponseDTO> clienteEncontrado(@PathVariable Long id, @RequestBody @Valid ClientRequestDTO dto){
         ClientResponseDTO cliente = service.update(id, dto);
         return ResponseEntity.ok(cliente);
     }
