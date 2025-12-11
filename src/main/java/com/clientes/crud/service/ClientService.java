@@ -36,7 +36,7 @@ public class ClientService {
     @Transactional(readOnly = true)
     public ClientResponseDTO findById (Long id){
         Client client = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("(CUSTOMIZAR O ERRO AINDA)"));
+                .orElseThrow(() -> new RuntimeException("Id não encontrado"));
         return new ClientResponseDTO(client);
     }
 
