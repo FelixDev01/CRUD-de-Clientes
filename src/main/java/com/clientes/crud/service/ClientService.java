@@ -20,7 +20,7 @@ public class ClientService {
     }
 
     @Transactional
-    public ClientResponseDTO criandoCliente (ClientRequestDTO dto){
+    public ClientResponseDTO novoCliente (ClientRequestDTO dto){
         Client cliente = new Client();
         copyDtoToEntity(dto, cliente);
         cliente = repository.save(cliente);

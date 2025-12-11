@@ -27,6 +27,7 @@ public class ClientResponseDTO {
 
     public ClientResponseDTO(Client cliente) {
 
+        id = cliente.getId();
         name = cliente.getName();
         cpf = cliente.getCpf();
         income = cliente.getIncome();
