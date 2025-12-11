@@ -1,5 +1,7 @@
 package com.clientes.crud.dto;
 
+import com.clientes.crud.Entity.Client;
+
 import java.time.LocalDate;
 
 public class ClientResponseDTO {
@@ -21,6 +23,15 @@ public class ClientResponseDTO {
         this.income = income;
         this.birthDate = birthDate;
         this.children = children;
+    }
+
+    public ClientResponseDTO(Client cliente) {
+
+        name = cliente.getName();
+        cpf = cliente.getCpf();
+        income = cliente.getIncome();
+        birthDate = cliente.getBirthDate();
+        children = cliente.getChildren();
     }
 
     public Long getId() {
